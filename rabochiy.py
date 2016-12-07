@@ -59,11 +59,22 @@ def test_fink():
         print(i)
 
 
-a = 30
-e= 31
-b= "мне сегодня %s лет"%a
-с = "мне сегодня  {} лет, а в следуюхем году {}".format(a,e)
-print(с)
-k = "мне сегодня  30 лет, а в следуюхем году 31"
-sorted(k)
-print(k)
+a = ["Вася", "Маша", "Петя", "Валера", "Саша", "Даша"]
+def find_person():
+    for i in a:
+        print(i)
+        if i == "Валера":
+            print("Валера нашелся")
+            break
+
+def ask():
+    while True:
+        i=input("как дела?")
+        if i != "Хорошо":
+            print(i)
+        else:
+            print("Хорошо")
+            break
+ask()
+except KeyboardInterrupt
+
