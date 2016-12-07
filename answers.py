@@ -1,9 +1,25 @@
-a = {"привет": "и тебе привет!","как дела": "Лучше всех" , "пока": "Увидимся"}
-b = str(input())
+answers = {
+"привет": "и тебе привет!",
+"как дела": "Лучше всех" , 
+"пока": "Увидимся"}
 
-c=b.lower()
 
-def get_answer():
-	return print (a[c])
 
-get_answer()	
+def get_answer(questions,answers):
+	return answers.get(questions)
+
+def ask_user(answer):
+	while True:
+		user_input = input("СКажи ченибудь: ")
+		answer = get_answer(user_input,answers)
+		print(answer)
+
+		if	user_input == "пока":
+			break
+def zap():
+
+	try:			
+		 return ask_user(answers)
+	except KeyboardInterrupt:
+		return print("ну все значит")	
+zap()				
