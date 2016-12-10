@@ -105,11 +105,23 @@ def zap():
 if __name__== " __main__":
 	zap()
 
-b = ['/wordcount ', '', '']
-c = b.pop(0)
-c= b.pop(-1)
-e= b[0].split(" ")
-if len(b[0])== 0:
-    print("по нулям")
+def wordcount_user(bot, update):
+    b = update.message.text
+    b=b.strip()
+    print(b)
+    b=b.split('"')
+    print(b)
+    c=b.pop(0)
+    c= b.pop(-1)
+    print(b)
+    e = b[0].split(" ")
+    print(e)
+    r = len(e)
+    print(r)
+    if len(b[0])== 0:
+        bot.sendMessage(update.message.chat_id,  text=" нет слов ")
+
+    else:
+        bot.sendMessage(update.message.chat_id,  text= str(r) + " слова")
 
 

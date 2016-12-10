@@ -24,7 +24,7 @@ def wordcount_user(bot, update):
     print(b)
     b=b.split('"')
     print(b)
-    if len(b) == 1:
+    if len(b[0].split(" ")) != 1:
         bot.sendMessage(update.message.chat_id,  text=  " нет кавычек ")
     else:    
         c=b.pop(0)
