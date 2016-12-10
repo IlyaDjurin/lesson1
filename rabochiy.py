@@ -58,7 +58,6 @@ def test_fink():
     for i in p5.know[0]:
         print(i)
 
-
 a = ["Вася", "Маша", "Петя", "Валера", "Саша", "Даша"]
 def find_person():
     for i in a:
@@ -80,7 +79,6 @@ answers = {
 "привет": "И тебе привет!",
 "как дела": "Лучше всех" ,
 "пока": "Увидимся"}
-
 
 
 def get_answer(questions,answers):
@@ -106,6 +104,12 @@ def zap():
 
 if __name__== " __main__":
 	zap()
-zap()
+
+b = ['/wordcount ', '', '']
+c = b.pop(0)
+c= b.pop(-1)
+e= b[0].split(" ")
+if len(b[0])== 0:
+    print("по нулям")
 
 
