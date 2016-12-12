@@ -9,21 +9,59 @@ def main():
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(CommandHandler("wordcount", wordcount_user))
+    dp.add_handler(CommandHandler("kalk", prov))
     dp.add_error_handler(show_error)
     dp.add_handler(MessageHandler([Filters.text], talk_to_me))
     dp.add_handler(CommandHandler("новости", f_nov))
     dp.add_handler(CommandHandler("погода", f_weat))
     updater.start_polling()
     updater.idle()
-    dp.message_handler(content_types=["YA"])
+
+
+def kalk_user(bot, update):
+    bot.sendMessage(update.message.chat_id,  text=  "введите выражение в виде : /kalk проблел значение пробел \
+        знак пробел = ")
+    i = update.message.text
+    i= i.strip()
+    if "=" in i: 
+        if " " in i:
+            i= i.split(" ")
+            print(i)
+            
+            i.pop(0)
+            i.pop()
+            print(i)
+            a=float(i[0])
+            b=float(i[2])
+            t= i.pop(1)
+            if t == "+":
+                bot.sendMessage(update.message.chat_id, (a+b))
+            elif t == "-":
+                bot.sendMessage(update.message.chat_id, (a-b))
+            elif t == "/":
+                bot.sendMessage(update.message.chat_id,(a/b))
+            elif t == "*":
+                bot.sendMessage(update.message.chat_id,(a*b))
+            else:
+                bot.sendMessage(update.message.chat_id,  text= "этот знак в разработке") 
+        else:
+            bot.sendMessage(update.message.chat_id,  text= "возможно вы что то не правильно ввели, забыли пробел между \
+                символами или ещё что-то")    
+    else:
+        bot.sendMessage(update.message.chat_id,  text="вы забыли знак = ")
+
+def prov(bot, update):
+    ##проверка для элементарного калькулятора
+    try:
+        return kalk_user(bot, update)
+    except (ZeroDivisionError , ValueError, TypeError, IndexError) :
+        return bot.sendMessage(update.message.chat_id,  text="вы забыли ввести значение или поделили на 0 !")   
 
 
 def wordcount_user(bot, update):
     b = update.message.text
     b=b.strip()
-    print(b)
     b=b.split('"')
-    print(b)
     if len(b[0].split(" ")) != 1:
         bot.sendMessage(update.message.chat_id,  text=  " нет кавычек ")
     else:    
@@ -60,11 +98,6 @@ def talk_to_me(bot, update):
     update.message.text=update.message.text.lower()
     bot.sendMessage(update.message.chat_id, get_answer(update.message.text,answers))
 
-def default_test(message):
-    keyboard = types.InlineKeyboardMarkup()
-    url_button = types.InlineKeyboardButton(text="Перейти на Яндекс", url="https://ya.ru")
-    keyboard.add(url_button)
-    bot.send_message(message.chat.id, "Привет! Нажми на кнопку и перейди в поисковик.", reply_markup=keyboard)    
 
 if __name__ == '__main__':
     main()
