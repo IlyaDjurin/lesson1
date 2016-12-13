@@ -102,8 +102,6 @@ def zap():
 	except KeyboardInterrupt:
 		return print("ну все значит")
 
-if __name__== " __main__":
-	zap()
 
 def wordcount_user(bot, update):
     b = update.message.text
@@ -125,3 +123,46 @@ def wordcount_user(bot, update):
         bot.sendMessage(update.message.chat_id,  text= str(r) + " слова")
 
 
+q = ['1','3','7','4','6',"+",'5','9','1','2']
+if "+" in  q:
+    a=q.index("+")
+    b=q[0:a]
+    s=''
+    b=s.join(b)
+    z=q[(a+1):]
+    z = s.join(z)
+    b=int(b)
+    z=int(z)
+    print(b+z)
+elif
+
+    e = []
+    i=[]
+    d=[]
+
+def one():
+
+    n="1"
+    e.append(n)
+    return n
+
+def two():
+
+    p="2"
+    i.append(p)
+    return p
+
+def plus():
+
+    c="+"
+    d.append(c)
+    return c
+one()
+two()
+plus()
+print(e+d+i)
+e="".join(e)
+d="".join(d)
+i="".join(i)
+o= e+d+i
+print(o)
