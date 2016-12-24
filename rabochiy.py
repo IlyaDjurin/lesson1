@@ -1,3 +1,9 @@
+from datetime import datetime
+import ephem
+import random
+import sys
+import locale
+
 class Information:
     def __init__(self, info):
         self.info = info
@@ -122,47 +128,28 @@ def wordcount_user(bot, update):
     else:
         bot.sendMessage(update.message.chat_id,  text= str(r) + " слова")
 
+def goroda():
+    b={'а':["Анкара","Андреевка","Адис-абеба"] , 'б':["Борисполь","Бабий ЯР","Братислава"],\
+       'в':["Вена","Волынь","Волгоград"],'г':[]}
+    i=input("Напиши город:")
+    c=i[-1]
+    print(c)
+    if c in b:
+        if len(b[c]) == 0:
+            print("города на эту букву закончились")
+        else:
+            print("Ответ тебе: ")
+            print(random.choice(b[c]))
+    else:
+        print("конец игры: города бота закончились")
 
-q = ['1','3','7','4','6',"+",'5','9','1','2']
-if "+" in  q:
-    a=q.index("+")
-    b=q[0:a]
-    s=''
-    b=s.join(b)
-    z=q[(a+1):]
-    z = s.join(z)
-    b=int(b)
-    z=int(z)
-    print(b+z)
-elif
+dt_now = datetime.now()
+dt2 = datetime(2015, 5, 16, 8, 3, 44)
+delta = dt_now - dt2
 
-    e = []
-    i=[]
-    d=[]
+locale._setlocale(locale.LC_ALL, "rus_rus")
 
-def one():
 
-    n="1"
-    e.append(n)
-    return n
+c=dt_now.strftime('%A %d %B %Y')
 
-def two():
-
-    p="2"
-    i.append(p)
-    return p
-
-def plus():
-
-    c="+"
-    d.append(c)
-    return c
-one()
-two()
-plus()
-print(e+d+i)
-e="".join(e)
-d="".join(d)
-i="".join(i)
-o= e+d+i
-print(o)
+print(c)

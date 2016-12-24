@@ -1,0 +1,6 @@
+﻿проверка в боте на идекнификатор чата
+{chat_id: goroda
+[16:26:17] Михаил Корнеев: active_games = {}
+[16:26:37] Михаил Корнеев: if update.message.chat_id in active_games:
+[16:27:29 | Изменены 16:27:51] Михаил Корнеев: active_games[update.message.chat_id] = a
+[16:28:18] Михаил Корнеев: del active_games[update.message.chat_id]

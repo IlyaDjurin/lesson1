@@ -1,7 +1,8 @@
 from telegram.ext import Updater , CommandHandler ,  MessageHandler, Filters,  InlineQueryHandler, CallbackQueryHandler
 from telegram import KeyboardButton, ReplyKeyboardMarkup , InlineKeyboardMarkup
 from answers import answers, get_answer, ask_user, zap
-
+import ephem
+import random
 
 
 def main():
@@ -15,6 +16,8 @@ def main():
     dp.add_handler(CommandHandler("новости", f_nov))
     dp.add_handler(CommandHandler("погода", f_weat))
     dp.add_handler(CommandHandler("kalk1", klava))
+    dp.add_handler(CommandHandler("kalk_slov", kalk_slov))
+    dp.add_handler(CommandHandler("goroda", goroda))
     dp.add_handler(CommandHandler("1", one))
     dp.add_handler(CommandHandler("2", two))
     dp.add_handler(CommandHandler("3", tree))
@@ -34,6 +37,92 @@ def main():
     updater.idle()
 
 q = []
+w = []
+##В перспективе а лучше занести в отдельный файл и просто вытягивать её сюда
+a={'а':["Анкара","Андреевка","Адис-абеба"] , 'б':["Борисполь","Бабий ЯР","Братислава"],\
+    'в':["Вена","Волынь","Волгоград"]}
+
+def goroda(bot, update):
+    ##Присваиваем переменной b значение словаря а что бы удалять оттуда элементы
+    b=a
+    i=update.message.text
+    ##удаляем из i /goroda
+    i=i[8:]
+    ## Проверяем, не вводил ли пользователь уже такой город
+    if i in w:
+        bot.sendMessage(update.message.chat_id,text = " Меня не проведешь")
+    else:
+        w.append(i)
+        print(i)
+        print(w)
+        ##Вытягиваем последнюю букву
+        c=i[-1]
+        if c in b:
+            ##Проверка элементов словаря, вдруг все города бота исчерпаны
+            if len(b[c]) == 0:
+                bot.sendMessage(update.message.chat_id, text = "Ты выиграл,города на эту букву закончились")
+                ##Очищаем список для следующей игры
+                w.clear()
+                b=a
+            else:
+##тут мы удаляем из словаря введенное слово если оно в нем есть что бы не было "Анкара-Анкара"
+                if i in (b[c]):
+                    print(b[c])
+                    k=b[c].index(i)
+                    print(k)
+                    (b[c]).pop(k)
+                    e=(b[c]).pop()
+                    w.append(e)
+                    bot.sendMessage(update.message.chat_id,e)
+                    bot.sendMessage(update.message.chat_id,text = " твой ход")
+                else:
+                    e=(b[c]).pop()
+                    w.append(e)    
+                    ##удаляем и одновременно возвращаем слово на указанную букву
+                    bot.sendMessage(update.message.chat_id,e)
+                    bot.sendMessage(update.message.chat_id,text = " твой ход")
+    
+        else:
+            bot.sendMessage(update.message.chat_id, text = "конец игры: города бота закончились")
+
+
+def kalk_slov(bot, update):
+    i = update.message.text
+    i= i.split(" ")
+    i.pop(0)
+    print(i)
+    w={'один': "1", 'два': "2", 'три': "3" ,'четыре':"4" , 'пять': "5",\
+   'шесть':"6", 'семь': "7", 'восемь': "8", 'девять': "9" , 'ноль': "0",\
+   'плюс': "+", 'минус': "-", 'умножить': "*", 'разделить' : "÷",\
+   'и':".", 'на':''}
+    try:
+        if i[0] in w:
+            q.append(w[i[0]])
+
+        if i[1] in w:
+            q.append(w[i[1]])
+
+        if i[2] in w:
+            q.append(w[i[2]])
+
+        if i[3] in w:
+            q.append(w[i[3]])
+
+        if i[4] in w:
+            q.append(w[i[4]])
+
+        if i[5] in w:
+            q.append(w[i[5]])
+
+        if i[6] in w:
+            q.append(w[i[6]])
+
+        if i[7] in w:
+            q.append(w[i[7]])
+    except IndexError:      
+        print('продолжаем')
+
+    ravno(bot, update)    
 
 def ravno  (bot, update):
 
@@ -64,7 +153,6 @@ def ravno  (bot, update):
         b=q[0:a]
         s=''
         b=s.join(b)
-        bot.sendMessage(update.message.chat_id,(b))
         z=q[(a+1):]
         z = s.join(z)
         b=float(b)
@@ -155,7 +243,7 @@ def plus(bot, update):
     return n                           
 
 def klava(bot, update):
-    keyboard = [[KeyboardButton('/1'), KeyboardButton('/2'),KeyboardButton('/3')],
+    keyboard = [[KeyboardButton('1'), KeyboardButton('/2'),KeyboardButton('/3')],
                 [KeyboardButton('/4'), KeyboardButton('/5'),KeyboardButton('/6')],
                 [KeyboardButton('/7'), KeyboardButton('/8'),KeyboardButton('/9')],
                 [KeyboardButton('/0'), KeyboardButton('/+'),KeyboardButton('/-')],
@@ -247,7 +335,19 @@ def show_error(bot, update, error):
 def talk_to_me(bot, update):
     print("Пришло сообщение: " + update.message.text)
     update.message.text=update.message.text.lower()
-    bot.sendMessage(update.message.chat_id, get_answer(update.message.text,answers))
+    if "когда ближайшее полнолуние после" in update.message.text:
+        a=update.message.text
+        print(a)
+        a=a.split(" ")
+        print(a)
+        a.pop(0)
+        a.pop(0)
+        a.pop(0)
+        a.pop(0)
+        bot.sendMessage(update.message.chat_id, str(ephem.next_full_moon(a[0])))
+        print(ephem.next_full_moon(a[0]))
+    else:    
+        bot.sendMessage(update.message.chat_id, get_answer(update.message.text,answers))
 
 
 if __name__ == '__main__':
