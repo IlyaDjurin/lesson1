@@ -3,8 +3,7 @@ with open('referat.txt', 'r', encoding='utf-8') as f:
    for line in f:
  		
         a.append(line)
-        ## если тут написать print(line) будет ошибка кодировки 
-        ##это бан Винды,на Убунте все работает
+        print(line)
 c= a[0].split(" ")
 d= a[1].split(" ")
 e= a[2].split(" ")
