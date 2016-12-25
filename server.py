@@ -42,20 +42,23 @@ def all_the_news():
 def children_in_year():
 	url = "http://api.data.mos.ru/v1/datasets/2009/rows"
 	children = get_children(url)
-	for i in range((len(children))):
-		res = "<table>"
-		res +=	'<tr>'
-		res +=		        '<th> Год </th>'
-		res +=		        '<th> Месяц </th>'
-		res +=		        '<th> Имя </th>'
-		res +=		    '</tr>'
+
+	res = "<table>"
+	res +=	'<tr>'
+	
+	res +=		        '<th> Год </th>'
+	res +=		        '<th> Месяц </th>'
+	res +=		        '<th> Имя </th>'
+
+	res +=		    '</tr>'
+	for i in range((len(children))-1):
 		res +=		    '<tr>'
-		res +=		        '<td> %s </td>' % children[i]["Cells"]["Year"]
+		res +=		        '<p><td> %s </td>' % children[i]["Cells"]["Year"]
 		res +=		        '<td> %s </td>' % children[i]["Cells"]["Month"]
 		res +=		        '<td> %s </td>' % children[i]["Cells"]["Name"]
 		res +=		    '</tr>'
 		res +=		'</table>'
-		return res		
+	return res		
 
 if 	__name__ == "__main__":
 	app.run()
