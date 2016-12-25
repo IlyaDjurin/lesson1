@@ -2,6 +2,7 @@ from flask import Flask , abort , request
 from req import get_weather
 from datetime import datetime
 from news_list import all_news
+from children_csv_json import get_children
 
 city_id = 709717
 apikey = '3b6ec58c341debf3510765f70980935d'
@@ -35,6 +36,26 @@ def all_the_news():
 		limit = request.args.get('limit','all')
 		color = request.args.get('color','black')
 	return '<h1 style="color: %s">News: <small>%s</small></h1>' % (color , limit)
+
+
+@app.route("/name")
+def children_in_year():
+	url = "http://api.data.mos.ru/v1/datasets/2009/rows"
+	children = get_children(url)
+	for i in range((len(children))):
+		res = "<table>"
+		res +=	'<tr>'
+		res +=		        '<th> Год </th>'
+		res +=		        '<th> Месяц </th>'
+		res +=		        '<th> Имя </th>'
+		res +=		    '</tr>'
+		res +=		    '<tr>'
+		res +=		        '<td> %s </td>' % children[i]["Cells"]["Year"]
+		res +=		        '<td> %s </td>' % children[i]["Cells"]["Month"]
+		res +=		        '<td> %s </td>' % children[i]["Cells"]["Name"]
+		res +=		    '</tr>'
+		res +=		'</table>'
+		return res		
 
 if 	__name__ == "__main__":
 	app.run()
