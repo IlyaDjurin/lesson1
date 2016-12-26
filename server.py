@@ -51,13 +51,22 @@ def children_in_year():
 	res +=		        '<th> Имя </th>'
 
 	res +=		    '</tr>'
-	for i in range((len(children))-1):
-		res +=		    '<tr>'
-		res +=		        '<p><td> %s </td>' % children[i]["Cells"]["Year"]
-		res +=		        '<td> %s </td>' % children[i]["Cells"]["Month"]
-		res +=		        '<td> %s </td>' % children[i]["Cells"]["Name"]
-		res +=		    '</tr>'
-		res +=		'</table>'
+	for item  in request.args:
+		arg_year = [2013,2014,2015,2016]
+		print(item)
+		limit = int(request.args.get('year'))
+		limit = limit if limit in arg_year else "не верно указан год"
+		for i in range((len(children))-1):
+			if children[i]["Cells"]["Year"] == limit:
+				res +=		    '<tr>'
+				res +=		        '<p><td> %s </td>' % limit
+				res +=		        '<td> %s </td>' % children[i]["Cells"]["Month"]
+				res +=		        '<td> %s </td>' % children[i]["Cells"]["Name"]
+				res +=		    '</tr>'
+				res +=		'</table>'
+			else:
+				pass	
+
 	return res		
 
 if 	__name__ == "__main__":
